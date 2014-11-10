@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>PubWorld</title>
+    </h:head>
+    <h:body>
+
+        <h:form>
+
+            <h3>Choose conference</h3>
+
+            <p:selectManyCheckbox id="basic" value="#{mBPubWorld.selectedConferences}">
+                <f:selectItems value="#{mBPubWorld.conferences}" var="c" itemLabel="#{conference}" itemValue="#{conference}"/>
+            </p:selectManyCheckbox>
+
+
+            <h3>Choose query</h3>
+            <p:outputPanel id="customPanel" style="margin-bottom:10px">
+                <p:selectOneRadio id="customRadio" value="#{mBPubWorld.option}" layout="custom" onchange="#{mBPubWorld.renderTable()}" >
+
+                    <f:selectItem itemLabel="Author" itemValue="Author"  />
+                    <f:selectItem itemLabel="Affiliation" itemValue="Affiliation" />
+                    <f:selectItem itemLabel="Program Commitee" itemValue="Program Commitee" />
+                </p:selectOneRadio>
+
+                <h:panelGrid columns="3" cellpadding="5">
+                    <p:radioButton id="opt1" for="customRadio" itemIndex="0" />
+                    <h:outputLabel for="opt1" value="Author" />
+                    <p:autoComplete id="authorinput" cache="true" cacheTimeout="30000" value="#{mBPubWorld.author}" completeMethod="#{mBPubWorld.executeQueryAuto}"  />
+
+                    <p:radioButton id="opt2" for="customRadio" itemIndex="1" />
+                    <h:outputLabel for="opt2" value="Affiliation" />
+                    <p:autoComplete id="affiliationinput" cache="true" cacheTimeout="30000" value="#{mBPubWorld.affiliation}" completeMethod="#{mBPubWorld.executeQueryAuto}" />
+
+                    <p:radioButton id="opt3" for="customRadio" itemIndex="2" />
+                    <h:outputLabel for="opt3" value="Program Commitee" />
+                    <p:autoComplete id="pcmemberinput" cache="true" cacheTimeout="30000" value="#{mBPubWorld.pcMember}" completeMethod="#{mBPubWorld.executeQueryAuto}" />
+                </h:panelGrid>
+            </p:outputPanel>
+
+            <p:commandButton value="Query" icon="ui-icon-check" actionListener="#{mBPubWorld.executeQuery}" update="table-wrapper" >
+                <f:ajax render="forma2" />    
+            </p:commandButton>
+
+<!--            <p:commandButton value="Submit" update="display" icon="ui-icon-check" oncomplete="PF('dlg').show()">
+                <f:ajax render="forma2" />    
+            </p:commandButton>
+
+            <p:dialog modal="true" resizable="false" widgetVar="dlg" header="Values" showEffect="clip">
+                <p:panelGrid columns="2" id="display" columnClasses="label,value">
+                    <h:outputText value="Author:" />
+                    <h:outputText value="#{mBPubWorld.author}" />
+
+                    <h:outputText value="affiliation:" />
+                    <h:outputText value="#{mBPubWorld.affiliation}" />
+
+                    <h:outputText value="pcMemeber:" />
+                    <h:outputText value="#{mBPubWorld.pcMember}" />
+
+                    <h:outputText value="Selected:" />
+                    <h:outputText value="#{mBPubWorld.option}" />
+
+                </p:panelGrid>
+            </p:dialog>-->
+            
+            <h:panelGroup id="table-wrapper">
+                <p:dataTable id="table1" var="item" value="#{mBPubWorld.resultsA}" rendered="#{mBPubWorld.table1rendered}" >
+                    <p:column headerText="Paper Name">
+                        <h:outputText value="#{item.paperName}" />
+                    </p:column>
+
+                    <p:column headerText="Year">
+                        <h:outputText value="#{item.conferenceYear}" />
+                    </p:column>
+
+                    <p:column headerText="Conference Name">
+                        <h:outputText value="#{item.conferenceName}" />
+                    </p:column>
+
+                    <p:column headerText="Conference Locaton">
+                        <h:outputText value="#{item.conferenceLocation}" />
+                    </p:column>
+                </p:dataTable>
+
+                <p:dataTable id="table2" var="item" value="#{mBPubWorld.resultsB}" rendered="#{mBPubWorld.table2rendered}">
+                    <p:column headerText="Paper name">
+                        <h:outputText value="#{item.paperName}" />
+                    </p:column>
+
+                    <p:column headerText="Paper Authors">
+                        <h:outputText value="#{item.papersAuthors}" />
+                    </p:column>
+
+                    <p:column headerText="Year">
+                        <h:outputText value="#{item.year}" />
+                    </p:column>
+
+                    <p:column headerText="Conference Name">
+                        <h:outputText value="#{item.conferenceName}" />
+                    </p:column>
+
+                    <p:column headerText="Conference Location">
+                        <h:outputText value="#{item.conferenceLocation}" />
+                    </p:column>
+                </p:dataTable>
+
+                <p:dataTable id="table3" var="item" value="#{mBPubWorld.resultsC}" rendered="#{mBPubWorld.table3rendered}">
+                    <p:column headerText="Name">
+                        <h:outputText value="#{item.pcMembername}" />
+                    </p:column>
+
+                    <p:column headerText="Affiliation">
+                        <h:outputText value="#{item.pcMemberAffiliation}" />
+                    </p:column>
+
+                    <p:column headerText="Conference Name">
+                        <h:outputText value="#{item.conferenceName}" />
+                    </p:column>
+
+                </p:dataTable>
+
+            </h:panelGroup>
+        </h:form>
+
+
+    </h:body>
+
+</html>
+
