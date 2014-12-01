@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        Hello from Facelets
+
+        <h3>Count of papers in each of the years crawled for ICDE conference</h3>
+
+        <p:chart type="pie" model="#{mBStatistics.pieModel2}" style="width:400px;height:300px" />
+
+        <h3>Timeseries of count of accepted papers and participants in crawled ICDE conferences</h3>
+
+        <p:chart type="line" model="#{mBStatistics.lineModel2}" style="height:300px;"/>
+
+        <h3>Top 30 universities and research labs with highest number of papers on crawled ICDE conferences</h3>
+
+        <p:chart type="bar" model="#{mBStatistics.barModel}" style="height:400px"/>
+
+        <h3>Donut of number of paper of selected universities in outer circle and number of papers from universities having a PC member in inner circle</h3>
+        <ul>
+            <ui:fragment rendered="true"><li>MIT University</li></ui:fragment>
+            <ui:fragment rendered="true"><li>Harvard University</li></ui:fragment>
+            <ui:fragment rendered="true"><li>Purdue University</li></ui:fragment>
+            <ui:fragment rendered="true"><li>Singapure University</li></ui:fragment>
+            <ui:fragment rendered="true"><li>Hong Kong University</li></ui:fragment>
+            <ui:fragment rendered="true"><li>Microsoft research</li></ui:fragment>
+            <ui:fragment rendered="true"><li>Yahoo! research</li></ui:fragment>
+        </ul>
+
+        <p:chart type="donut" model="#{mBStatistics.donutModel2}" style="width:800px;height:600px" />
+
+    </h:body>
+</html>
+

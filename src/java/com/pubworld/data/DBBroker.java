@@ -60,6 +60,7 @@ public class DBBroker {
 
     public void closeConnection() throws SQLException {
         conn.close();
+        System.out.println("Connection to the database has been closed");
     }
 
     /**
@@ -303,4 +304,109 @@ public class DBBroker {
         System.out.println("Database returned " + results.size() + " results");
         return results;
     }
+
+    public ResultSet getCountOfPublicationsOfAllUniversities() {
+        ResultSet rs = null;
+        try {
+            String SQL = "select distinct(pubworld.dbo.Participant.participantAffiliation), count(pubworld.dbo.Participant.participantAffiliation)"
+                    + " from pubworld.dbo.Participant"
+                    + " group by pubworld.dbo.Participant.participantAffiliation"
+                    + " order by count(pubworld.dbo.Participant.participantAffiliation) desc";
+
+            Statement stmt = conn.createStatement();
+            rs = stmt.executeQuery(SQL);
+
+//            while (rs.next()) {
+//                System.out.println(rs.getString(1)+"  "+rs.getInt(2));
+//            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBBroker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rs;
+    }
+
+    public ResultSet getCountOfPublicationsOfSelectedUniversities() {
+        ResultSet rs = null;
+        try {
+            String SQL = "select distinct(pubworld.dbo.Participant.participantAffiliation), count(Paper.paperId)\n"
+                    + "from pubworld.dbo.Participant join pubworld.dbo.Author on Participant.participantId = Author.participantId join pubworld.dbo.Paper on Paper.paperId = Author.paperId join pubworld.dbo.Conference on Paper.conferenceId = Conference.conferenceId\n"
+                    + "where Participant.participantAffiliation LIKE '%MIT%' or Participant.participantAffiliation LIKE '%Harvard%' or Participant.participantAffiliation LIKE '%Purdue%'\n"
+                    + "or Participant.participantAffiliation LIKE '%Singapure%' or Participant.participantAffiliation LIKE '%Hong Kong%' or Participant.participantAffiliation LIKE '%Microsoft%' or Participant.participantAffiliation LIKE '%Yahoo%'\n"
+                    + "group by pubworld.dbo.Participant.participantAffiliation\n"
+                    + "order by count(Paper.paperId) desc";
+
+            Statement stmt = conn.createStatement();
+            rs = stmt.executeQuery(SQL);
+
+//            while (rs.next()) {
+//                System.out.println(rs.getString(1)+"  "+rs.getInt(2));
+//            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBBroker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rs;
+    }
+
+    public ResultSet getCountOfPublicationsOfSelectedUniversitiesProgramCommitees() {
+        ResultSet rs = null;
+        try {
+            String SQL = "select distinct(pubworld.dbo.ProgramComitee.affiliation), count(Paper.paperId)\n"
+                    + "from pubworld.dbo.ProgramComitee join pubworld.dbo.Participant on ProgramComitee.participantId=Participant.participantId join pubworld.dbo.Author on Author.participantId = Participant.participantId join pubworld.dbo.Paper on Paper.paperId = Author.paperId\n"
+                    + "where ProgramComitee.affiliation LIKE '%MIT%' or ProgramComitee.affiliation LIKE '%Harvard%' or ProgramComitee.affiliation LIKE '%Purdue%'\n"
+                    + "or ProgramComitee.affiliation LIKE '%Singapure%' or ProgramComitee.affiliation LIKE '%Hong Kong%' or ProgramComitee.affiliation LIKE '%Microsoft%' or ProgramComitee.affiliation LIKE '%Yahoo%'\n"
+                    + "group by ProgramComitee.affiliation\n"
+                    + "order by count(Paper.paperId) desc";
+
+            Statement stmt = conn.createStatement();
+            rs = stmt.executeQuery(SQL);
+
+//            while (rs.next()) {
+//                System.out.println(rs.getString(1)+"  "+rs.getInt(2));
+//            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBBroker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rs;
+    }
+
+    public ResultSet getCountOfPublicationsOfConference() {
+        ResultSet rs = null;
+        try {
+            String SQL = "select distinct(Conference.conferenceYear), count(Paper.paperId)\n"
+                    + "from pubworld.dbo.Paper join pubworld.dbo.Conference on Paper.conferenceId = Conference.conferenceId\n"
+                    + "group by Conference.conferenceYear\n"
+                    + "order by Conference.conferenceYear";
+
+            Statement stmt = conn.createStatement();
+            rs = stmt.executeQuery(SQL);
+
+//            while (rs.next()) {
+//                System.out.println(rs.getString(1)+"  "+rs.getInt(2));
+//            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBBroker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rs;
+    }
+
+    public ResultSet getCountParticipantsPerYear() {
+        ResultSet rs = null;
+        try {
+            String SQL = "select distinct(Conference.conferenceYear), count(Participant.participantId)\n"
+                    + "from pubworld.dbo.Participant join pubworld.dbo.Author on Author.participantId = Participant.participantId join pubworld.dbo.Paper on Paper.paperId = Author.paperId join pubworld.dbo.Conference on Paper.conferenceId = Conference.conferenceId\n"
+                    + "group by Conference.conferenceYear\n"
+                    + "order by Conference.conferenceYear";
+
+            Statement stmt = conn.createStatement();
+            rs = stmt.executeQuery(SQL);
+
+//            while (rs.next()) {
+//                System.out.println(rs.getString(1)+"  "+rs.getInt(2));
+//            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBBroker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rs;
+    }
+
 }

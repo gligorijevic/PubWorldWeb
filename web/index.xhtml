@@ -11,6 +11,8 @@
 
         <h:form>
 
+            <h:link value="Statistics page" outcome="statistics" />
+
             <h3>Choose conference</h3>
 
             <p:selectManyCheckbox id="basic" value="#{mBPubWorld.selectedConferences}">
@@ -46,27 +48,27 @@
                 <f:ajax render="forma2" />    
             </p:commandButton>
 
-<!--            <p:commandButton value="Submit" update="display" icon="ui-icon-check" oncomplete="PF('dlg').show()">
-                <f:ajax render="forma2" />    
-            </p:commandButton>
-
-            <p:dialog modal="true" resizable="false" widgetVar="dlg" header="Values" showEffect="clip">
-                <p:panelGrid columns="2" id="display" columnClasses="label,value">
-                    <h:outputText value="Author:" />
-                    <h:outputText value="#{mBPubWorld.author}" />
-
-                    <h:outputText value="affiliation:" />
-                    <h:outputText value="#{mBPubWorld.affiliation}" />
-
-                    <h:outputText value="pcMemeber:" />
-                    <h:outputText value="#{mBPubWorld.pcMember}" />
-
-                    <h:outputText value="Selected:" />
-                    <h:outputText value="#{mBPubWorld.option}" />
-
-                </p:panelGrid>
-            </p:dialog>-->
+            <!--            <p:commandButton value="Submit" update="display" icon="ui-icon-check" oncomplete="PF('dlg').show()">
+                            <f:ajax render="forma2" />    
+                        </p:commandButton>
             
+                        <p:dialog modal="true" resizable="false" widgetVar="dlg" header="Values" showEffect="clip">
+                            <p:panelGrid columns="2" id="display" columnClasses="label,value">
+                                <h:outputText value="Author:" />
+                                <h:outputText value="#{mBPubWorld.author}" />
+            
+                                <h:outputText value="affiliation:" />
+                                <h:outputText value="#{mBPubWorld.affiliation}" />
+            
+                                <h:outputText value="pcMemeber:" />
+                                <h:outputText value="#{mBPubWorld.pcMember}" />
+            
+                                <h:outputText value="Selected:" />
+                                <h:outputText value="#{mBPubWorld.option}" />
+            
+                            </p:panelGrid>
+                        </p:dialog>-->
+
             <h:panelGroup id="table-wrapper">
                 <p:dataTable id="table1" var="item" value="#{mBPubWorld.resultsA}" rendered="#{mBPubWorld.table1rendered}" >
                     <p:column headerText="Paper Name">
